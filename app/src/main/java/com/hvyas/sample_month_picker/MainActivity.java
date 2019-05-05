@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         new EasyMonthPicker(this)
                 .setYear(2020)
+                .setMonth(EasyMonthPicker.FEB)
                 .setCancelable(false)
                 .setBodyBgId(R.color.white)
                 .setBottomBtnBgId(R.color.white)
