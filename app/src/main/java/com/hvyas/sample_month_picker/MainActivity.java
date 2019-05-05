@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
                 .setTitleTextColor(Color.WHITE)
                 .setSelectedUnselectedTextColor(Color.WHITE, Color.BLACK)
                 .setColorThemeId(R.color.colorAccent)
-                .setTitleText("Select month")
                 .setPositiveButton(new DateMonthDialogListener() {
                     @Override
                     public void onDateMonth(int year, ArrayList<Integer> selectedMonthIndexList, ArrayList<Integer> EndDate, ArrayList<String> month_name) {
