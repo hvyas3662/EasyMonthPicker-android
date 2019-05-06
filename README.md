@@ -54,26 +54,30 @@ dependencies {
 
    | Methods | Description |
    | --- | --- |
-   | `getSelectedDays()` | Return Boolean type ArrayList with 7 element (if day is selected return true else return false at same index, 0th index represent sunday )  |
-   | `getSelectedDaysName()` | Return String type ArrayList of selected day's full name eg. sunday |
-   | `getSelectedDaysShortName()` | Return String type ArrayList of selected day's short name eg. sun |
-   | `getNthChild(int index)` | Return button view of given index, if index value is more then 7 or less then 0 then this method return null  |
-   | `setOnDaySelectionChangeListener(OnDaySelectionChangeListener listener)` | set Selection change listener |
-   | `setDaysName(String[] days_name)` | Set day button text using 0 to 6th index value of given argument | 
-   | `setDayBtnTextAppearance(Context ctx, int id)` | Set textAppearance of each day button | 
-   | `getDayBtnTextAppearance()` | Return textAppearance id |
-   | `setDayBtnBackground(int id)` | Set background drawable, take id of drawable eg. R.drawable.your_custom_drawable |
-   | `getDayBtnBackground()` | Return drawable id |
-   | `setDayBtnMarginPx(int left, int top, int right, int bottom)` | Set left, top, bottom, right margin to each day buttom, given value is pixel |
-   | `getDayBtnMarginLeftPx()` | Return left margin value in pixel |
-   | `getDayBtnMarginTopPx()` | Return top margin value in pixel |
-   | `getDayBtnMarginRightPx()` | Return right margin value in pixel |
-   | `getDayBtnMarginBottomPx()` | Return bottom margin value in pixel |
-   | `setDayBtnStateTextColors(int DayBtnSelectedTextColor, int DayBtnUnSelectedTextColor)` | Set text color of selected and unselected state of each day buttom |
-   | `getDayBtnSelectedTextColor()` | Return selected state textcolor of day button |
-   | `getDayBtnUnSelectedTextColor()` | Return unselected state textcolor of day button |
-   | `setDayBtnTextSize()` | Set text size of each day buttom |
-   | `setMultipleSelected(boolean status_sun, boolean status_mon, boolean status_tue, boolean status_wed, boolean status_thu, boolean status_fri, boolean status_sat) ` | Select Multiple days |
+   | `EasyMonthPicker()` | Return Boolean type ArrayList with 7 element (if day is selected return true else return false at same index, 0th index represent sunday )  |
+   | `show()` | Return String type ArrayList of selected day's full name eg. sunday |
+   | `dismiss()` | Return String type ArrayList of selected day's short name eg. sun |
+   | `setTitleTextColor(int TitleTextColorId)` | Return button view of given index, if index value is more then 7 or less then 0 then this method return null  |
+   | `setTitleText(String title)` | set Selection change listener |
+   | `setColorThemeId(int color)` | Set day button text using 0 to 6th index value of given argument | 
+   | `setBodyBgId(int BodyBgId)` | Set textAppearance of each day button | 
+   | `setBottomBtnBgId(int BottomBtnBgId)` | Return textAppearance id |
+   | `setYearTextAppearanceId(int id)` | Set background drawable, take id of drawable eg. R.drawable.your_custom_drawable |
+   | `setNextPreviousButtonDrawable(int NextButtonDrawableId, int PreviousButtonDrawableId)` | Return drawable id |
+   | `setMonthTextAppearanceId(int selectedId, int unSelectedId)` | Set left, top, bottom, right margin to each day buttom, given value is pixel |
+   | `setMonthViewBackgroundId(int MonthViewBackgroundId)` | Return left margin value in pixel |
+   | `setSelectedUnselectedTextColor(int selectedColor, int unselectedColor)` | Return top margin value in pixel |
+   | `setPositiveText(String text)` | Return right margin value in pixel |
+   | `setNegativeText(String text)` | Return bottom margin value in pixel |
+   | `setShortMonthNameEnable(Boolean value)` | Set text color of selected and unselected state of each day buttom |
+   | `setLocale(Locale locale)` | Return selected state textcolor of day button |
+   | `setYear(int index)` | Return unselected state textcolor of day button |
+   | `setMonth(int index)` | Set text size of each day buttom |
+   | `setCancelable(boolean cancelable)` | Select Multiple days |
+   | `PositiveButton(DateMonthDialogListener dateMonthDialogListener)` | Select Multiple days |
+   | `setNegativeButton(OnCancelMonthDialogListener onCancelMonthDialogListener)` | Select Multiple days |
+   | `setSelectionLimit(int limit)` | Select Multiple days |
+  
 
 ## Compatibility
   
