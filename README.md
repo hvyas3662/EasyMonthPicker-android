@@ -51,7 +51,10 @@ dependencies {
   ```
   
 ## Other methods
+
    Below written each method return EasyMonthPicker class current instance for method chaining.
+   
+   
    | Methods | Description |
    | --- | --- |
    | `EasyMonthPicker(Context context)` | take activity context in argument and init builder class  |
