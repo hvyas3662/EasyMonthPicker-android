@@ -37,7 +37,6 @@ public class EasyMonthPicker {
     private boolean ShortMonthNameEnable = false;
     public static final int JAN = 0, FEB = 1, MAR = 2, APR = 3, MAY = 4, JUN = 5, JUL = 6, AUG = 7, SEP = 8, OCT = 9, NOV = 10, DEC = 11;
 
-
     public EasyMonthPicker(Context context) {
         this.context = context;
         builder = new Builder();
@@ -204,12 +203,12 @@ public class EasyMonthPicker {
             previous = contentView.findViewById(R.id.btn_previous);
             previous.setOnClickListener(previousButtonClick());
 
-            mPositiveButton = (Button) contentView.findViewById(R.id.btn_p);
-            mNegativeButton = (Button) contentView.findViewById(R.id.btn_n);
+            mPositiveButton = contentView.findViewById(R.id.btn_p);
+            mNegativeButton = contentView.findViewById(R.id.btn_n);
 
 
             monthAdapter = new MonthAdapter(context, selectedColor, unselectedColor);
-            RecyclerView recyclerView = (RecyclerView) contentView.findViewById(R.id.recycler_view);
+            RecyclerView recyclerView = contentView.findViewById(R.id.recycler_view);
             recyclerView.setLayoutManager(new GridLayoutManager(context, 4));
             recyclerView.setHasFixedSize(true);
             recyclerView.setAdapter(monthAdapter);
