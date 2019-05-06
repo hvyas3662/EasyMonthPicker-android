@@ -51,32 +51,33 @@ dependencies {
   ```
   
 ## Other methods
-
+   Below written each method return EasyMonthPicker class current instance for method chaining.
    | Methods | Description |
    | --- | --- |
-   | `EasyMonthPicker()` | Return Boolean type ArrayList with 7 element (if day is selected return true else return false at same index, 0th index represent sunday )  |
-   | `show()` | Return String type ArrayList of selected day's full name eg. sunday |
-   | `dismiss()` | Return String type ArrayList of selected day's short name eg. sun |
-   | `setTitleTextColor(int TitleTextColorId)` | Return button view of given index, if index value is more then 7 or less then 0 then this method return null  |
-   | `setTitleText(String title)` | set Selection change listener |
-   | `setColorThemeId(int color)` | Set day button text using 0 to 6th index value of given argument | 
-   | `setBodyBgId(int BodyBgId)` | Set textAppearance of each day button | 
-   | `setBottomBtnBgId(int BottomBtnBgId)` | Return textAppearance id |
-   | `setYearTextAppearanceId(int id)` | Set background drawable, take id of drawable eg. R.drawable.your_custom_drawable |
-   | `setNextPreviousButtonDrawable(int NextButtonDrawableId, int PreviousButtonDrawableId)` | Return drawable id |
-   | `setMonthTextAppearanceId(int selectedId, int unSelectedId)` | Set left, top, bottom, right margin to each day buttom, given value is pixel |
-   | `setMonthViewBackgroundId(int MonthViewBackgroundId)` | Return left margin value in pixel |
-   | `setSelectedUnselectedTextColor(int selectedColor, int unselectedColor)` | Return top margin value in pixel |
-   | `setPositiveText(String text)` | Return right margin value in pixel |
-   | `setNegativeText(String text)` | Return bottom margin value in pixel |
-   | `setShortMonthNameEnable(Boolean value)` | Set text color of selected and unselected state of each day buttom |
-   | `setLocale(Locale locale)` | Return selected state textcolor of day button |
-   | `setYear(int index)` | Return unselected state textcolor of day button |
-   | `setMonth(int index)` | Set text size of each day buttom |
-   | `setCancelable(boolean cancelable)` | Select Multiple days |
-   | `PositiveButton(DateMonthDialogListener dateMonthDialogListener)` | Select Multiple days |
-   | `setNegativeButton(OnCancelMonthDialogListener onCancelMonthDialogListener)` | Select Multiple days |
-   | `setSelectionLimit(int limit)` | Select Multiple days |
+   | `EasyMonthPicker(Context context)` | take activity context in argument and init builder class  |
+   | `show()` | Show the dialog |
+   | `dismiss()` | Dismiss the dialog |
+   | `setTitleTextColor(int TitleTextColorId)` | Set the dialog title text color |
+   | `setTitleText(String title)` | Set the dialog title text |
+   | `setColorThemeId(int color)` | Set the dialog theme color (Change the title background color, selected month drawable color, positive and negative button color) | 
+   | `setBodyBgId(int BodyBgId)` | Set dialog body color or drawable (below title part), required resource id in argument | 
+   | `setBottomBtnBgId(int BottomBtnBgId)` | Set positive and negative button background color or drawable, required resource id in argument |
+   | `setYearTextAppearanceId(int id)` | Set YearTextAppearance, required resource id in argument |
+   | `setYearWidgetColor(int color)` | `set year widget color (change next, previous and year text color) |
+   | `setNextPreviousButtonDrawable(int NextButtonDrawableId, int PreviousButtonDrawableId)` | set the Drawable of next, previous buttons, required resource id in argument  |
+   | `setMonthTextAppearanceId(int selectedId, int unSelectedId)` | Set the Month selecte and unselected state textAppearanceId, required resource id in argument  |
+   | `setMonthViewBackgroundId(int MonthViewBackgroundId)` | Set custom state list background to month view , required resource id in argument  |
+   | `setSelectedUnselectedTextColor(int selectedColor, int unselectedColor)` | Set selected and un selected month text color |
+   | `setPositiveText(String text)` | Set positive button text |
+   | `setNegativeText(String text)` | Set negative button text |
+   | `setShortMonthNameEnable(Boolean value)` | If set true return month short name eg. Jan, else return month full name eb. january |
+   | `setLocale(Locale locale)` | Set the local |
+   | `setYear(int index)` | set selected year |
+   | `setMonth(int index)` | Set selected month |
+   | `setCancelable(boolean cancelable)` | Set Cancelable |
+   | `PositiveButton(DateMonthDialogListener dateMonthDialogListener)` | Set Positive Button click listener |
+   | `setNegativeButton(OnCancelMonthDialogListener onCancelMonthDialogListener)` |  Set Negative Button click listener |
+   | `setSelectionLimit(int limit)` | Set maximum month selection limit |
   
 
 ## Compatibility
