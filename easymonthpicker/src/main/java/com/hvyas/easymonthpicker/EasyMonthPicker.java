@@ -55,7 +55,6 @@ public class EasyMonthPicker {
         mAlertDialog.dismiss();
     }
 
-
     public EasyMonthPicker setTitleTextColor(int TitleTextColorId) {
         builder.setTitleTextColor(TitleTextColorId);
         return this;
