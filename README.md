@@ -66,14 +66,14 @@ dependencies {
    | `setBodyBgId(int BodyBgId)` | Set dialog body color or drawable (below title part), required resource id in argument | 
    | `setBottomBtnBgId(int BottomBtnBgId)` | Set positive and negative button background color or drawable, required resource id in argument |
    | `setYearTextAppearanceId(int id)` | Set YearTextAppearance, required resource id in argument |
-   | `setYearWidgetColor(int color)` | `set year widget color (change next, previous and year text color) |
+   | `setYearWidgetColor(int color)` | set year widget color (change next, previous and year text color) |
    | `setNextPreviousButtonDrawable(int NextButtonDrawableId, int PreviousButtonDrawableId)` | set the Drawable of next, previous buttons, required resource id in argument  |
    | `setMonthTextAppearanceId(int selectedId, int unSelectedId)` | Set the Month selecte and unselected state textAppearanceId, required resource id in argument  |
    | `setMonthViewBackgroundId(int MonthViewBackgroundId)` | Set custom state list background to month view , required resource id in argument  |
    | `setSelectedUnselectedTextColor(int selectedColor, int unselectedColor)` | Set selected and un selected month text color |
    | `setPositiveText(String text)` | Set positive button text |
    | `setNegativeText(String text)` | Set negative button text |
-   | `setShortMonthNameEnable(Boolean value)` | If set true return month short name eg. Jan, else return month full name eb. january |
+   | `setShortMonthNameEnable(Boolean value)` | If set true return month short name eg. Jan, else return month full name eg. january |
    | `setLocale(Locale locale)` | Set the local |
    | `setYear(int index)` | set selected year |
    | `setMonth(int index)` | Set selected month |
