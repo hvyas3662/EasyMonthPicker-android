@@ -1,4 +1,4 @@
-package com.hvyas.easymonthpicker;
+package com.elevationsoft.easymonthpicker;
 
 import org.junit.Test;
 

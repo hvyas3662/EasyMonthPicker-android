@@ -11,17 +11,19 @@ EasyMonthPicker :- A android library helps you to select one or more month(s) an
 ## How to configure
 
  For a working implementation, please have a look at the app directory
- 1. Add maven in your root build.gradle at the end of repositories
- 2. Add the dependency
+ 1. Add maven in your root build.gradle
+
 ```gradle
 allprojects {
   repositories {
     maven { url 'https://jitpack.io' }
   }
 }
-
+```
+ 2. Add the dependency in your app level build.gradle
+ ```gradle
 dependencies {
-  implementation 'com.github.hvyas3662:EasyMonthPicker-android:1.0'
+  implementation 'com.github.hvyas3662:EasyMonthPicker-android:2.0'
 }
 ```
 

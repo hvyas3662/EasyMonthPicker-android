@@ -1,13 +1,13 @@
-package com.hvyas.easymonthpicker;
+package com.elevationsoft.easymonthpicker;
 
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -16,8 +16,8 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.hvyas.easymonthpicker.listener.DateMonthDialogListener;
-import com.hvyas.easymonthpicker.listener.OnCancelMonthDialogListener;
+import com.elevationsoft.easymonthpicker.listener.DateMonthDialogListener;
+import com.elevationsoft.easymonthpicker.listener.OnCancelMonthDialogListener;
 
 import java.util.Calendar;
 import java.util.Date;

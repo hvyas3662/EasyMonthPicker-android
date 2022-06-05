@@ -1,4 +1,4 @@
-package com.hvyas.sample_month_picker;
+package com.elevationsoft.sample_month_picker;
 
 import org.junit.Test;
 
