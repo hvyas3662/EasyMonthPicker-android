@@ -1,365 +1,350 @@
 package com.elevationsoft.easymonthpicker;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AlertDialog;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.elevationsoft.easymonthpicker.listener.DateMonthDialogListener;
-import com.elevationsoft.easymonthpicker.listener.OnCancelMonthDialogListener;
+import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.StyleRes;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
+import androidx.core.widget.TextViewCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.elevationsoft.easymonthpicker.listener.OnMonthMultiSelectListener;
+import com.elevationsoft.easymonthpicker.listener.OnMonthPickerDismissListener;
+import com.elevationsoft.easymonthpicker.listener.OnMonthSelectListener;
+import com.elevationsoft.easymonthpicker.model.MonthPickerResult;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-
+@SuppressWarnings("unused")
 public class EasyMonthPicker {
-
+    private final Context context;
     private AlertDialog mAlertDialog;
-    private EasyMonthPicker.Builder builder;
-    private Context context;
-    private Button mPositiveButton;
-    private Button mNegativeButton;
-    private DateMonthDialogListener dateMonthDialogListener;
-    private OnCancelMonthDialogListener onCancelMonthDialogListener;
-    private boolean isBuild = false;
-    private boolean ShortMonthNameEnable = false;
     public static final int JAN = 0, FEB = 1, MAR = 2, APR = 3, MAY = 4, JUN = 5, JUL = 6, AUG = 7, SEP = 8, OCT = 9, NOV = 10, DEC = 11;
+    private TextView tvYear;
+
+    //monthPickerData
+    private String titleText, positiveButtonText, negativeButtonText;
+    private int selectedYear, selectedMonthIndex, maxMonthSelectionLimit;
+    private ArrayList<Integer> selectedMonthIndexList = new ArrayList<>();
+    private boolean isCancelable, isMultiSelect;
+    @DrawableRes
+    private int nextButtonDrawable, previousButtonDrawable, monthBgSelector;
+    @ColorInt
+    private int dialogBgColor, dialogPrimaryColor, titleTextColor, selectedMonthTextColor, unSelectedMonthTextColor, yearWidgetColor;
+    @StyleRes
+    private int selectedMonthTextAppearance, unSelectedMonthTextAppearance, yearTextAppearance;
+
+    private OnMonthMultiSelectListener onMonthMultiSelectListener = null;
+    private OnMonthSelectListener onMonthSelectListener = null;
+    private OnMonthPickerDismissListener onMonthPickerDismissListener = null;
+
+    private Locale locale = Locale.ENGLISH;
 
     public EasyMonthPicker(Context context) {
         this.context = context;
-        builder = new Builder();
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+
+        titleText = context.getString(R.string.emp_text_select_month);
+        positiveButtonText = context.getString(R.string.emp_text_ok);
+        negativeButtonText = context.getString(R.string.emp_text_cancel);
+        selectedYear = cal.get(Calendar.YEAR);
+        selectedMonthIndex = cal.get(Calendar.MONTH);
+
+        maxMonthSelectionLimit = 3;
+        isCancelable = false;
+        isMultiSelect = false;
+        nextButtonDrawable = R.drawable.ic_next_year;
+        previousButtonDrawable = R.drawable.ic_previous_year;
+        monthBgSelector = 0;
+        dialogBgColor = ContextCompat.getColor(context, R.color.emp_dialog_bg);
+        dialogPrimaryColor = ContextCompat.getColor(context, R.color.emp_dialog_primary);
+        titleTextColor = ContextCompat.getColor(context, R.color.emp_title_text_color);
+        selectedMonthTextColor = ContextCompat.getColor(context, R.color.emp_selected_month_text_color);
+        unSelectedMonthTextColor = ContextCompat.getColor(context, R.color.emp_month_text_color);
+        yearWidgetColor = ContextCompat.getColor(context, R.color.emp_year_widget_color);
+        selectedMonthTextAppearance = 0;
+        unSelectedMonthTextAppearance = 0;
+        yearTextAppearance = 0;
     }
 
-    public void show() {
-        if (isBuild) {
-            mAlertDialog.show();
-        } else {
-            builder.build();
-            isBuild = true;
-        }
+    public EasyMonthPicker setPositiveButtonText(String text) {
+        this.positiveButtonText = text;
+        return this;
+    }
+
+    public EasyMonthPicker setNegativeButtonText(String text) {
+        this.negativeButtonText = text;
+        return this;
+    }
+
+    public EasyMonthPicker setSelectedMonth(int monthIndex) {
+        this.selectedMonthIndex = monthIndex;
+        return this;
+    }
+
+    public EasyMonthPicker isCancelable(boolean cancelable) {
+        this.isCancelable = cancelable;
+        return this;
+    }
+
+    public EasyMonthPicker setMultiSelect(int limit, ArrayList<Integer> monthIndexList) {
+        this.isMultiSelect = true;
+        this.maxMonthSelectionLimit = limit;
+        this.selectedMonthIndexList.clear();
+        this.selectedMonthIndexList.addAll(monthIndexList);
+        return this;
+    }
+
+    public EasyMonthPicker setNextPreviousYearButtonDrawable(@DrawableRes int nextButtonDrawable, @DrawableRes int previousButtonDrawable) {
+        this.nextButtonDrawable = nextButtonDrawable;
+        this.previousButtonDrawable = previousButtonDrawable;
+        return this;
+    }
+
+    public EasyMonthPicker setTitleTextColor(@ColorRes int titleTextColor) {
+        this.titleTextColor = ContextCompat.getColor(context, titleTextColor);
+        return this;
+    }
+
+    public EasyMonthPicker setSelectedUnselectedMonthTextColor(@ColorRes int unselectedColor, @ColorRes int selectedColor) {
+        this.unSelectedMonthTextColor = ContextCompat.getColor(context, unselectedColor);
+        this.selectedMonthTextColor = ContextCompat.getColor(context, selectedColor);
+        return this;
+    }
+
+    public EasyMonthPicker setYearWidgetColor(@ColorRes int color) {
+        this.yearWidgetColor = ContextCompat.getColor(context, color);
+        return this;
+    }
+
+    public EasyMonthPicker setMonthTextAppearance(@StyleRes int unSelected, @StyleRes int selected) {
+        this.selectedMonthTextAppearance = selected;
+        this.unSelectedMonthTextAppearance = unSelected;
+        return this;
+    }
+
+    public EasyMonthPicker setYearTextAppearance(@StyleRes int id) {
+        this.yearTextAppearance = id;
+        return this;
+    }
+
+    public EasyMonthPicker setOnMonthMultiSelectListener(OnMonthMultiSelectListener multiSelectListener) {
+        onMonthMultiSelectListener = multiSelectListener;
+        return this;
+    }
+
+    public EasyMonthPicker setOnMonthSelectListener(OnMonthSelectListener monthSelectListener) {
+        onMonthSelectListener = monthSelectListener;
+        return this;
+    }
+
+    public EasyMonthPicker setOnMonthPickerDismissListener(OnMonthPickerDismissListener dismissListener) {
+        onMonthPickerDismissListener = dismissListener;
+        return this;
     }
 
     public void dismiss() {
         mAlertDialog.dismiss();
     }
 
-    public EasyMonthPicker setTitleTextColor(int TitleTextColorId) {
-        builder.setTitleTextColor(TitleTextColorId);
-        return this;
+    public void show() {
+        @SuppressLint("InflateParams")
+        View contentView = LayoutInflater.from(context).inflate(R.layout.dialog_month_picker, null);
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context, R.style.EasyMonthPicker_Dialog);
+        mAlertDialog = alertBuilder.setView(contentView).setCancelable(isCancelable).create();
+        mAlertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+
+        contentView.setBackgroundColor(dialogBgColor);
+        TextView tvTitleView = contentView.findViewById(R.id.title);
+        ImageButton ivPreviousYear = contentView.findViewById(R.id.btn_previous);
+        tvYear = contentView.findViewById(R.id.text_year);
+        ImageButton ivNextYear = contentView.findViewById(R.id.btn_next);
+        RecyclerView recyclerView = contentView.findViewById(R.id.recycler_view);
+        TextView mPositiveButton = contentView.findViewById(R.id.btn_positive);
+        TextView mNegativeButton = contentView.findViewById(R.id.btn_negative);
+
+        tvTitleView.setBackgroundColor(dialogPrimaryColor);
+        tvTitleView.setText(titleText);
+        tvTitleView.setTextColor(titleTextColor);
+
+        ivPreviousYear.setImageResource(previousButtonDrawable);
+        ivPreviousYear.setColorFilter(yearWidgetColor, PorterDuff.Mode.SRC_IN);
+        ivPreviousYear.setOnClickListener(v -> {
+            selectedYear--;
+            tvYear.setText(String.valueOf(selectedYear));
+
+        });
+        if (yearTextAppearance != 0) {
+            TextViewCompat.setTextAppearance(tvYear, yearTextAppearance);
+        }
+        tvYear.setText(String.valueOf(selectedYear));
+        tvYear.setTextColor(yearWidgetColor);
+        ivNextYear.setImageResource(nextButtonDrawable);
+        ivNextYear.setColorFilter(yearWidgetColor, PorterDuff.Mode.SRC_IN);
+        ivNextYear.setOnClickListener(v -> {
+            selectedYear++;
+            tvYear.setText(String.valueOf(selectedYear));
+        });
+
+        ArrayList<Integer> selectedIndex = new ArrayList<>();
+        if (isMultiSelect) {
+            for (int i = 0; i < maxMonthSelectionLimit; i++) {
+                if (selectedMonthIndexList.size() > i) {
+                    selectedIndex.add(selectedMonthIndexList.get(i));
+                }
+            }
+        } else {
+            selectedIndex.add(selectedMonthIndex);
+        }
+        MonthAdapter monthAdapter = new MonthAdapter(this, selectedIndex);
+        recyclerView.setLayoutManager(new GridLayoutManager(context, 4));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(monthAdapter);
+
+        mPositiveButton.setText(positiveButtonText);
+        mPositiveButton.setTextColor(dialogPrimaryColor);
+        mPositiveButton.setOnClickListener(v -> {
+                    if (isMultiSelect) {
+                        if (onMonthMultiSelectListener != null) {
+                            ArrayList<MonthPickerResult> result = monthAdapter.getSelectedMonthResultList();
+                            onMonthMultiSelectListener.onPositiveButtonClicked(result);
+                        }
+                    } else {
+                        if (onMonthSelectListener != null) {
+                            ArrayList<MonthPickerResult> result = monthAdapter.getSelectedMonthResultList();
+                            onMonthSelectListener.onPositiveButtonClicked(result.get(0));
+                        }
+                    }
+                    mAlertDialog.dismiss();
+                }
+        );
+
+        mNegativeButton.setText(negativeButtonText);
+        mNegativeButton.setTextColor(dialogPrimaryColor);
+        mNegativeButton.setOnClickListener(v -> {
+                    if (isMultiSelect) {
+                        if (onMonthMultiSelectListener != null) {
+                            onMonthMultiSelectListener.onNegativeButtonClicked();
+                        }
+                    } else {
+                        if (onMonthSelectListener != null) {
+                            onMonthSelectListener.onNegativeButtonClicked();
+                        }
+                    }
+                    mAlertDialog.dismiss();
+                }
+        );
+
+        mAlertDialog.setOnDismissListener(dialog -> {
+            if (onMonthPickerDismissListener != null) {
+                onMonthPickerDismissListener.onMonthPickerDismissed();
+            }
+        });
+
+        mAlertDialog.show();
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public String getTitleText() {
+        return titleText;
     }
 
     public EasyMonthPicker setTitleText(String title) {
-        builder.setTitleText(title);
+        this.titleText = title;
         return this;
     }
 
-    public EasyMonthPicker setColorThemeId(int color) {
-        builder.setColorTheme(color);
+    public int getSelectedYear() {
+        return selectedYear;
+    }
+
+    public EasyMonthPicker setSelectedYear(int year) {
+        this.selectedYear = year;
         return this;
     }
 
-    public EasyMonthPicker setBodyBgId(int BodyBgId) {
-        builder.setBodyBg(BodyBgId);
+    public int getSelectedMonthIndex() {
+        return selectedMonthIndex;
+    }
+
+    public int getMaxMonthSelectionLimit() {
+        return maxMonthSelectionLimit;
+    }
+
+    public boolean setMultiSelect() {
+        return isMultiSelect;
+    }
+
+    public int getMonthBgSelector() {
+        return monthBgSelector;
+    }
+
+    public EasyMonthPicker setMonthBgSelector(@DrawableRes int monthBgSelector) {
+        this.monthBgSelector = monthBgSelector;
         return this;
     }
 
-    public EasyMonthPicker setBottomBtnBgId(int BottomBtnBgId) {
-        builder.setBottomBtnBg(BottomBtnBgId);
+    public int getDialogBgColor() {
+        return dialogBgColor;
+    }
+
+    public EasyMonthPicker setDialogBgColor(@ColorRes int bgColor) {
+        this.dialogBgColor = ContextCompat.getColor(context, bgColor);
         return this;
     }
 
-    public EasyMonthPicker setYearTextAppearanceId(int id) {
-        builder.setYearTextAppearanceId(id);
+    public int getDialogPrimaryColor() {
+        return dialogPrimaryColor;
+    }
+
+    public EasyMonthPicker setDialogPrimaryColor(@ColorRes int color) {
+        this.dialogPrimaryColor = ContextCompat.getColor(context, color);
         return this;
     }
 
-    public EasyMonthPicker setYearWidgetColor(int color) {
-        builder.setYearWidgetColor(color);
-        return this;
+    public int getSelectedMonthTextColor() {
+        return selectedMonthTextColor;
     }
 
-    public EasyMonthPicker setNextPreviousButtonDrawable(int NextButtonDrawableId, int PreviousButtonDrawableId) {
-        builder.setNextPreviousButtonDrawable(NextButtonDrawableId, PreviousButtonDrawableId);
-        return this;
+    public int getUnSelectedMonthTextColor() {
+        return unSelectedMonthTextColor;
     }
 
-    public EasyMonthPicker setMonthTextAppearanceId(int selectedId, int unSelectedId) {
-        builder.setMonthViewTextAppearanceId(selectedId, unSelectedId);
-        return this;
+    public int getSelectedMonthTextAppearance() {
+        return selectedMonthTextAppearance;
     }
 
-    public EasyMonthPicker setMonthViewBackgroundId(int MonthViewBackgroundId) {
-        builder.setMonthViewBackgroundId(MonthViewBackgroundId);
-        return this;
+    public int getUnSelectedMonthTextAppearance() {
+        return unSelectedMonthTextAppearance;
     }
 
-    public EasyMonthPicker setSelectedUnselectedTextColor(int selectedColor, int unselectedColor) {
-        builder.setSelectedUnselectedTextColor(selectedColor, unselectedColor);
-        return this;
-    }
-
-    public EasyMonthPicker setPositiveText(String text) {
-        mPositiveButton.setText(text);
-        return this;
-    }
-
-    public EasyMonthPicker setNegativeText(String text) {
-        mNegativeButton.setText(text);
-        return this;
-    }
-
-    public EasyMonthPicker setShortMonthNameEnable(Boolean value) {
-        builder.setShortMonthNameEnable(value);
-        return this;
+    public Locale getLocale() {
+        return locale;
     }
 
     public EasyMonthPicker setLocale(Locale locale) {
-        builder.setLocale(locale);
+        this.locale = locale;
         return this;
-    }
-
-    public EasyMonthPicker setYear(int index) {
-        builder.setYear(index);
-        return this;
-    }
-
-    public EasyMonthPicker setMonth(int index) {
-        builder.setMonth(index);
-        return this;
-    }
-
-    public EasyMonthPicker setCancelable(boolean cancelable) {
-        builder.cancelable = cancelable;
-        return this;
-    }
-
-    public EasyMonthPicker setPositiveButton(DateMonthDialogListener dateMonthDialogListener) {
-        this.dateMonthDialogListener = dateMonthDialogListener;
-        mPositiveButton.setOnClickListener(builder.positiveButtonClick());
-        return this;
-    }
-
-    public EasyMonthPicker setNegativeButton(OnCancelMonthDialogListener onCancelMonthDialogListener) {
-        this.onCancelMonthDialogListener = onCancelMonthDialogListener;
-        mNegativeButton.setOnClickListener(builder.negativeButtonClick());
-        return this;
-    }
-
-    public EasyMonthPicker setSelectionLimit(int limit) {
-        builder.setSelectionLimit(limit);
-        return this;
-    }
-
-    private class Builder {
-
-        private MonthAdapter monthAdapter;
-        private TextView mTitleView;
-        private TextView mYear;
-        private int year;
-        private AlertDialog.Builder alertBuilder;
-        private View contentView;
-        private boolean cancelable = true;
-        private LinearLayout background, buttonLayout;
-        private int NextButtonDrawable = R.drawable.forward, PreviousButtonDrawable = R.drawable.back, TitleTextColor = -1, BodyBg = -1, BottomBtnBg = -1;
-        private int selectedColor = Color.WHITE, unselectedColor = Color.BLACK, YearWidgetColor = Color.BLACK;
-        private ImageButton next, previous;
-        private int selectedTextAppearance, unSelectedTextAppearance, selectedYearTextAppearance;
-        private int max_select;
-
-        private Builder() {
-            alertBuilder = new AlertDialog.Builder(context);
-            contentView = LayoutInflater.from(context).inflate(R.layout.dialog_month_picker, null, false);
-            contentView.setFocusable(true);
-            contentView.setFocusableInTouchMode(true);
-
-            Date date = new Date();
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(date);
-            year = cal.get(Calendar.YEAR);
-
-            mTitleView = contentView.findViewById(R.id.title);
-            background = contentView.findViewById(R.id.material_background);
-            buttonLayout = contentView.findViewById(R.id.buttonLayout);
-
-            mYear = contentView.findViewById(R.id.text_year);
-            mYear.setText(year + "");
-
-            next = contentView.findViewById(R.id.btn_next);
-            next.setOnClickListener(nextButtonClick());
-
-            previous = contentView.findViewById(R.id.btn_previous);
-            previous.setOnClickListener(previousButtonClick());
-
-            mPositiveButton = contentView.findViewById(R.id.btn_p);
-            mNegativeButton = contentView.findViewById(R.id.btn_n);
-
-
-            monthAdapter = new MonthAdapter(context, selectedColor, unselectedColor);
-            RecyclerView recyclerView = contentView.findViewById(R.id.recycler_view);
-            recyclerView.setLayoutManager(new GridLayoutManager(context, 4));
-            recyclerView.setHasFixedSize(true);
-            recyclerView.setAdapter(monthAdapter);
-        }
-
-        void setLocale(Locale locale) {
-            monthAdapter.setLocale(locale);
-        }
-
-        void setYear(int year) {
-            this.year = year;
-            mYear.setText(year + "");
-        }
-
-        void setSelectionLimit(int limit) {
-            max_select = limit;
-            monthAdapter.setSelectionLimit(max_select);
-        }
-
-        void setMonth(int index) {
-            monthAdapter.setItem(index);
-        }
-
-        void setTitleTextColor(int TitleTextColorId) {
-            TitleTextColor = TitleTextColorId;
-            mTitleView.setTextColor(TitleTextColor);
-        }
-
-        void setBodyBg(int BodyBgId) {
-            BodyBg = BodyBgId;
-            background.setBackgroundResource(BodyBg);
-        }
-
-        void setBottomBtnBg(int BottomBtnBgId) {
-            BottomBtnBg = BottomBtnBgId;
-            buttonLayout.setBackgroundResource(BottomBtnBg);
-        }
-
-        void setTitleText(String title) {
-            mTitleView.setText(title);
-        }
-
-        void setSelectedUnselectedTextColor(int selectedColor, int unselectedColor) {
-            this.unselectedColor = unselectedColor;
-            this.selectedColor = selectedColor;
-            monthAdapter.setSelectedUnselectedTextColor(selectedColor, unselectedColor);
-        }
-
-        void setNextPreviousButtonDrawable(int NextButtonDrawableId, int PreviousButtonDrawableId) {
-            NextButtonDrawable = NextButtonDrawableId;
-            PreviousButtonDrawable = PreviousButtonDrawableId;
-            next.setImageResource(NextButtonDrawable);
-            next.setColorFilter(YearWidgetColor, PorterDuff.Mode.SRC_IN);
-            previous.setImageResource(PreviousButtonDrawable);
-            previous.setColorFilter(YearWidgetColor, PorterDuff.Mode.SRC_IN);
-            mYear.setTextColor(YearWidgetColor);
-            mYear.setTextAppearance(context, selectedYearTextAppearance);
-        }
-
-        void setColorTheme(int color) {
-            LinearLayout linearToolbar = contentView.findViewById(R.id.linear_toolbar);
-            linearToolbar.setBackgroundColor(ContextCompat.getColor(context, color));
-
-            monthAdapter.setBackgroundMonth(color);
-            mPositiveButton.setTextColor(ContextCompat.getColor(context, color));
-            mNegativeButton.setTextColor(ContextCompat.getColor(context, color));
-        }
-
-        void setMonthViewTextAppearanceId(int selectedId, int unSelectedId) {
-            selectedTextAppearance = selectedId;
-            unSelectedTextAppearance = unSelectedId;
-            monthAdapter.setSelectedTextAppearanceId(selectedTextAppearance, unSelectedTextAppearance);
-        }
-
-        void setYearTextAppearanceId(int id) {
-            selectedYearTextAppearance = id;
-            mYear.setTextAppearance(context, selectedYearTextAppearance);
-        }
-
-        void setShortMonthNameEnable(Boolean value) {
-            ShortMonthNameEnable = value;
-        }
-
-        void setYearWidgetColor(int color) {
-            YearWidgetColor = color;
-            next.setImageResource(NextButtonDrawable);
-            next.setColorFilter(YearWidgetColor, PorterDuff.Mode.SRC_IN);
-            previous.setImageResource(PreviousButtonDrawable);
-            previous.setColorFilter(YearWidgetColor, PorterDuff.Mode.SRC_IN);
-            mYear.setTextColor(YearWidgetColor);
-            mYear.setTextAppearance(context, selectedYearTextAppearance);
-        }
-
-        void setMonthViewBackgroundId(int MonthViewBackgroundId) {
-            monthAdapter.setMonthViewBackground(MonthViewBackgroundId);
-        }
-
-        void build() {
-            mAlertDialog = alertBuilder.create();
-            mAlertDialog.show();
-            mAlertDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-            mAlertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_MASK_STATE);
-            mAlertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
-            mAlertDialog.getWindow().setBackgroundDrawableResource(R.drawable.material_dialog_window);
-            mAlertDialog.getWindow().setContentView(contentView);
-            mAlertDialog.setCancelable(cancelable);
-
-        }
-
-        View.OnClickListener nextButtonClick() {
-            return new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    year++;
-                    mYear.setText(year + "");
-                }
-            };
-        }
-
-        View.OnClickListener previousButtonClick() {
-            return new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    year--;
-                    mYear.setText(year + "");
-                }
-            };
-        }
-
-        View.OnClickListener positiveButtonClick() {
-            return new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dateMonthDialogListener.onDateMonth(
-                            year,
-                            monthAdapter.getMonthListIndex(),
-                            monthAdapter.getEndDateList(),
-                            monthAdapter.getMonthList(ShortMonthNameEnable));
-
-                    mAlertDialog.dismiss();
-                }
-            };
-        }
-
-        View.OnClickListener negativeButtonClick() {
-            return new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    onCancelMonthDialogListener.onCancel(mAlertDialog);
-                }
-            };
-        }
-
     }
 }

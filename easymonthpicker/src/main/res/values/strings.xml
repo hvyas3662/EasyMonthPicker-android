@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">DateMonthDialog</string>
+    <string name="app_name">MonthPicker</string>
+
+    <!--dialog-->
+    <string name="emp_text_select_month">Select Month</string>
+    <string name="emp_text_cancel">Cancel</string>
+    <string name="emp_text_ok">OK</string>
 </resources>

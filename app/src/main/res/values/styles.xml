@@ -9,4 +9,15 @@
     </style>
 
 
+    <style name="tp" parent="TextAppearance.AppCompat">
+        <item name="textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="tp1" parent="TextAppearance.AppCompat">
+        <item name="textAllCaps">false</item>
+        <item name="android:textStyle">italic</item>
+    </style>
+
+
 </resources>
