@@ -62,40 +62,37 @@ public void onNegativeButtonClicked(){
         })
         .show();
   ```
-  
+
 ## Other methods
 
-   Below written each method return EasyMonthPicker class current instance for method chaining.
-   
-   
-   | Methods | Description |
-   | --- | --- |
-   | `EasyMonthPicker(Context context)` | take activity context in argument and init builder class  |
-   | `show()` | Show the dialog |
-   | `dismiss()` | Dismiss the dialog |
-   | `setTitleTextColor(int TitleTextColorId)` | Set the dialog title text color |
-   | `setTitleText(String title)` | Set the dialog title text |
-   | `setColorThemeId(int color)` | Set the dialog theme color (Change the title background color, selected month drawable color, positive and negative button color) | 
-   | `setBodyBgId(int BodyBgId)` | Set dialog body color or drawable (below title part), required resource id in argument | 
-   | `setBottomBtnBgId(int BottomBtnBgId)` | Set positive and negative button background color or drawable, required resource id in argument |
-   | `setYearTextAppearanceId(int id)` | Set YearTextAppearance, required resource id in argument |
-   | `setYearWidgetColor(int color)` | set year widget color (change next, previous and year text color) |
-   | `setNextPreviousButtonDrawable(int NextButtonDrawableId, int PreviousButtonDrawableId)` | set the Drawable of next, previous buttons, required resource id in argument  |
-   | `setMonthTextAppearanceId(int selectedId, int unSelectedId)` | Set the Month selecte and unselected state textAppearanceId, required resource id in argument  |
-   | `setMonthViewBackgroundId(int MonthViewBackgroundId)` | Set custom state list background to month view , required resource id in argument  |
-   | `setSelectedUnselectedTextColor(int selectedColor, int unselectedColor)` | Set selected and un selected month text color |
-   | `setPositiveText(String text)` | Set positive button text |
-   | `setNegativeText(String text)` | Set negative button text |
-   | `setShortMonthNameEnable(Boolean value)` | If set true return month short name eg. Jan, else return month full name eg. january |
-   | `setLocale(Locale locale)` | Set the local |
-   | `setYear(int index)` | set selected year |
-   | `setMonth(int index)` | Set selected month |
-   | `setCancelable(boolean cancelable)` | Set Cancelable |
-   | `PositiveButton(DateMonthDialogListener dateMonthDialogListener)` | Set Positive Button click listener |
-   | `setNegativeButton(OnCancelMonthDialogListener onCancelMonthDialogListener)` |  Set Negative Button click listener |
-   | `setSelectionLimit(int limit)` | Set maximum month selection limit |
-  
+Below written each method return EasyMonthPicker class current instance for method chaining.
+
+| Methods | Description |
+| --- | --- |
+| `EasyMonthPicker(Context context)` | Take activity context in argument and init builder class  |
+| `setTitleText(String title)` | Set the dialog title text |
+| `setSelectedYear(int year)` | set selected year | 
+| `setPositiveButtonText(String text)` | Set positive button text | 
+| `setNegativeButtonText(String text)` | Set negative button text |
+| `setSelectedMonth(int monthIndex)` | Set selected month index | 
+| `isCancelable(boolean cancelable)` | Set dialog cancelable flag | 
+| `setMultiSelect(int limit, ArrayList<Integer> monthIndexList)` | Enable multi select 1 st Arg: max no of selection and 2nd Arg list of selected month index  | 
+| `setNextPreviousYearButtonDrawable(@DrawableRes int nextButtonDrawable, @DrawableRes int previousButtonDrawable)` | Set the Drawable of next, previous year buttons, required drawable resource id in argument |
+| `setTitleTextColor(@ColorRes int titleTextColor)` |  Set the dialog title text color |
+| `setSelectedUnselectedMonthTextColor(@ColorRes int unselectedColor, @ColorRes int selectedColor)` | Set selected and un selected month text color  |
+| `setDialogBgColor(@ColorRes int bgColor)` | Set dialog background color also include bottom action bar | 
+| `setDialogPrimaryColor(@ColorRes int color)` | Set dialog primery color which effect, title bg, selected month bg, and text color of action buttons |
+| `setYearWidgetColor(@ColorRes int color)` | Set color of year widgit which effect tint of next previous year button tint and year text color |
+| `setMonthBgSelector(@DrawableRes int monthBgSelector)` | Set custom selected unselected state list drawable note: if we use custom monthBg Drawable then dialog primary color will not work on it | 
+| `setMonthTextAppearance(@StyleRes int unSelected, @StyleRes int selected)` |  Set selected and unSelected state month TextAppearance | 
+| `setYearTextAppearance(@StyleRes int id)` | Set Year TextAppearance |
+| `setOnMonthMultiSelectListener(OnMonthMultiSelectListener multiSelectListener)` | Set listener of multi select | 
+| `setOnMonthSelectListener(OnMonthSelectListener monthSelectListener)` | Set listener for single select | 
+| `setOnMonthPickerDismissListener(OnMonthPickerDismissListener dismissListener)` | Set listener of dismiss event |
+| `setLocale(Locale locale)` | Set Locale | 
+| `show()` | Show the dialog |
+| `dismiss()` | Dismiss the dialog |
 
 ## Compatibility
-  
-  * Requires minimum android API 21 or above
+
+* Requires minimum android API 21 or above
