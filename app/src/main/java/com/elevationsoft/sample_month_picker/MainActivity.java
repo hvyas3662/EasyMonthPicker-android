@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
                 .setYearTextAppearance(R.style.tp)
                 .setMonthTextAppearance(R.style.tp, R.style.tp1)
                 .setNextPreviousYearButtonDrawable(R.drawable.ic_arrow_forward_black_24dp, R.drawable.ic_arrow_back_black_24dp)
-                .setMonthBgSelector(R.drawable.selector)
                 .setOnMonthSelectListener(new OnMonthSelectListener() {
                     @Override
                     public void onPositiveButtonClicked(MonthPickerResult result) {
