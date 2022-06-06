@@ -71,7 +71,7 @@ Below written each method return EasyMonthPicker class current instance for meth
 | --- | --- |
 | `EasyMonthPicker(Context context)` | Take activity context in argument and init builder class  |
 | `setTitleText(String title)` | Set the dialog title text |
-| `setSelectedYear(int year)` | set selected year | 
+| `setSelectedYear(int year)` | Set selected year | 
 | `setPositiveButtonText(String text)` | Set positive button text | 
 | `setNegativeButtonText(String text)` | Set negative button text |
 | `setSelectedMonth(int monthIndex)` | Set selected month index | 
